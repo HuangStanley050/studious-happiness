@@ -3,6 +3,8 @@ version: "3"
 services:
   nginx:
     restart: always
+    volumes:
+      - ./nginx:/etc/nginx/conf.d/
     build:
       dockerfile: Dockerfile.dev
       context: ./nginx
