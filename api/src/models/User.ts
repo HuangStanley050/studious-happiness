@@ -5,6 +5,8 @@ interface User {
   name: string;
   email: string;
   password: string;
+  keyWords: string[];
+  photos: string[];
 }
 
 const userSchema = new Schema({
@@ -19,7 +21,11 @@ const userSchema = new Schema({
   password: {
     type: String,
     required: true
-  }
+  },
+  keyWords: {
+    type: [String]
+  },
+  photos: [{ type: Schema.Types.ObjectId, ref: "Photo" }]
 });
 
 export default mongoose.model<User & mongoose.Document>("User", userSchema);

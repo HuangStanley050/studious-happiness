@@ -9,22 +9,18 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var mongoose = __importStar(require("mongoose"));
 var Schema = mongoose.Schema;
-var userSchema = new Schema({
-    name: {
+var photoSchema = new Schema({
+    unSplashId: {
         type: String,
         required: true
     },
-    email: {
+    pictureUrl: {
         type: String,
         required: true
     },
-    password: {
-        type: String,
-        required: true
-    },
-    keyWords: {
-        type: [String]
-    },
-    photos: [{ type: Schema.Types.ObjectId, ref: "Photo" }]
+    user: {
+        ref: "User",
+        type: Schema.Types.ObjectId
+    }
 });
-exports.default = mongoose.model("User", userSchema);
+exports.default = mongoose.model("Photo", photoSchema);
