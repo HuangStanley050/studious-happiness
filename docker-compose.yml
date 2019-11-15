@@ -11,6 +11,8 @@ services:
     ports:
       - "3050:80"
   api:
+    env_file:
+      - ./api/.env
     build:
       dockerfile: Dockerfile.dev
       context: ./api
