@@ -20,7 +20,7 @@ class AuthController implements Controller {
     this.initializeRoutes();
   }
   initializeRoutes = () => {
-    this.router.get("/", this.rootRoute);
+    this.router.get(`${this.path}`, this.rootRoute);
     this.router.post(`${this.path}/login`, this.loginRoute);
     this.router.post(
       `${this.path}/register`,

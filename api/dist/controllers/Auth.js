@@ -51,7 +51,7 @@ var AuthController = /** @class */ (function () {
         this.path = "/auth";
         this.router = express_1.default.Router();
         this.initializeRoutes = function () {
-            _this.router.get("/", _this.rootRoute);
+            _this.router.get("" + _this.path, _this.rootRoute);
             _this.router.post(_this.path + "/login", _this.loginRoute);
             _this.router.post(_this.path + "/register", [
                 express_validator_1.check("name").isLength({ min: 3, max: 255 }),
