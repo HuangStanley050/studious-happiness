@@ -11,7 +11,7 @@ var authController = new Auth_1.default();
 var dataController = new Data_1.default();
 var port = process.env.PORT || 5000;
 var app = new App_1.App(port, [authController, dataController]);
-var dataBaseURI = "mongodb://mongo/users";
+var dataBaseURI = "mongodb://mongo/dockerPhoto";
 mongoose_1.default.connect(process.env.MONGODB_URI || dataBaseURI).then(function () {
     app.listen();
 });

@@ -35,6 +35,13 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __spreadArrays = (this && this.__spreadArrays) || function () {
+    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
+    for (var r = Array(s), k = 0, i = 0; i < il; i++)
+        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
+            r[k] = a[j];
+    return r;
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -60,7 +67,7 @@ var DataController = /** @class */ (function () {
             res.send("Data route");
         };
         this.savePhotosRoute = function (req, res, next) { return __awaiter(_this, void 0, void 0, function () {
-            var _a, userId, photoInfo, keyWords, photoIds, user, err_1;
+            var _a, userId, photoInfo, keyWords, photoIds, error, user, err_1, error;
             var _this = this;
             return __generator(this, function (_b) {
                 switch (_b.label) {
@@ -83,14 +90,15 @@ var DataController = /** @class */ (function () {
                                             return [4 /*yield*/, newPhoto.save()];
                                         case 1:
                                             result = _a.sent();
-                                            photoIds.push(result.id);
+                                            photoIds.push(result._id);
                                             return [2 /*return*/];
                                     }
                                 });
                             }); });
                         }
                         catch (err) {
-                            console.log(err);
+                            error = { message: "Unable to save photos", status: 500 };
+                            return [2 /*return*/, next(error)];
                         }
                         _b.label = 1;
                     case 1:
@@ -103,16 +111,21 @@ var DataController = /** @class */ (function () {
                         }
                         if (!(user !== null)) return [3 /*break*/, 4];
                         user.keyWords.push(keyWords);
-                        user.photos = photoIds;
+                        user.photos = __spreadArrays(user.photos, photoIds);
                         return [4 /*yield*/, user.save()];
                     case 3:
                         _b.sent();
+                        res.send("op completed");
                         _b.label = 4;
                     case 4: return [3 /*break*/, 6];
                     case 5:
                         err_1 = _b.sent();
                         console.log(err_1);
-                        return [3 /*break*/, 6];
+                        error = {
+                            message: "Unable to save photos to user model",
+                            status: 500
+                        };
+                        return [2 /*return*/, next(error)];
                     case 6: return [2 /*return*/];
                 }
             });

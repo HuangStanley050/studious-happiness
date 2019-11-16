@@ -45,6 +45,7 @@ class DataController implements Controller {
     let photoIds: mongoose.Schema.Types.ObjectId[] = [];
     // get each photo from photonInfo array and save userId
     //save each photoId from the data base into user's model array of photos
+
     try {
       photoInfo.map(async (photo: PhotoData) => {
         let newPhoto = new Photo({
@@ -53,11 +54,13 @@ class DataController implements Controller {
           pictureUrl: photo.photoUrl
         });
         let result = await newPhoto.save();
-        photoIds.push(result.id);
+        photoIds.push(result._id);
       });
     } catch (err) {
-      console.log(err);
+      let error = { message: "Unable to save photos", status: 500 };
+      return next(error);
     }
+
     try {
       let user = await User.findOne({ _id: userId });
       if (!user) {
@@ -65,11 +68,17 @@ class DataController implements Controller {
       }
       if (user !== null) {
         user.keyWords.push(keyWords);
-        user.photos = photoIds;
+        user.photos = [...user.photos, ...photoIds];
         await user.save();
+        res.send("op completed");
       }
     } catch (err) {
       console.log(err);
+      let error = {
+        message: "Unable to save photos to user model",
+        status: 500
+      };
+      return next(error);
     }
   };
   private getPhotosRoute = async (
