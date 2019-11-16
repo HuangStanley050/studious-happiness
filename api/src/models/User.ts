@@ -1,13 +1,13 @@
-import * as mongoose from "mongoose";
+import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
-interface User {
+export type UserDocument = mongoose.Document & {
   name: string;
   email: string;
   password: string;
   keyWords: string[];
-  photos: string[];
-}
+  photos: mongoose.Schema.Types.ObjectId[];
+};
 
 const userSchema = new Schema({
   name: {
@@ -28,4 +28,4 @@ const userSchema = new Schema({
   photos: [{ type: Schema.Types.ObjectId, ref: "Photo" }]
 });
 
-export default mongoose.model<User & mongoose.Document>("User", userSchema);
+export default mongoose.model<UserDocument>("User", userSchema);

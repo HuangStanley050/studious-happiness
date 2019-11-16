@@ -1,5 +1,6 @@
 import express, { Request, Response, NextFunction, IRouter } from "express";
 import axios from "axios";
+import mongoose from "mongoose";
 import Photo from "../models/Photo";
 import User from "../models/User";
 import { Controller } from "../App";
@@ -41,7 +42,7 @@ class DataController implements Controller {
     //photoInfo is an array that contain objects that would have photoId and photoUrl
     // [{photoId:1,photoUrl:"www.stock.com"},{photoId:2,photoUrl:"www.stock2.com"}]
     const { userId, photoInfo, keyWords } = req.body;
-    let photoIds: String[] = [];
+    let photoIds: mongoose.Schema.Types.ObjectId[] = [];
     // get each photo from photonInfo array and save userId
     //save each photoId from the data base into user's model array of photos
     try {
@@ -54,11 +55,19 @@ class DataController implements Controller {
         let result = await newPhoto.save();
         photoIds.push(result.id);
       });
-
-      let user = await User.find({ id: userId });
-      user.keyWords = photoIds;
-
-      res.send("photo save route");
+    } catch (err) {
+      console.log(err);
+    }
+    try {
+      let user = await User.findOne({ _id: userId });
+      if (!user) {
+        throw new Error();
+      }
+      if (user !== null) {
+        user.keyWords.push(keyWords);
+        user.photos = photoIds;
+        await user.save();
+      }
     } catch (err) {
       console.log(err);
     }

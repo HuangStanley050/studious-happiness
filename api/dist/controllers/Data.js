@@ -67,38 +67,53 @@ var DataController = /** @class */ (function () {
                     case 0:
                         _a = req.body, userId = _a.userId, photoInfo = _a.photoInfo, keyWords = _a.keyWords;
                         photoIds = [];
+                        // get each photo from photonInfo array and save userId
+                        //save each photoId from the data base into user's model array of photos
+                        try {
+                            photoInfo.map(function (photo) { return __awaiter(_this, void 0, void 0, function () {
+                                var newPhoto, result;
+                                return __generator(this, function (_a) {
+                                    switch (_a.label) {
+                                        case 0:
+                                            newPhoto = new Photo_1.default({
+                                                user: userId,
+                                                unSplashId: photo.photoId,
+                                                pictureUrl: photo.photoUrl
+                                            });
+                                            return [4 /*yield*/, newPhoto.save()];
+                                        case 1:
+                                            result = _a.sent();
+                                            photoIds.push(result.id);
+                                            return [2 /*return*/];
+                                    }
+                                });
+                            }); });
+                        }
+                        catch (err) {
+                            console.log(err);
+                        }
                         _b.label = 1;
                     case 1:
-                        _b.trys.push([1, 3, , 4]);
-                        photoInfo.map(function (photo) { return __awaiter(_this, void 0, void 0, function () {
-                            var newPhoto, result;
-                            return __generator(this, function (_a) {
-                                switch (_a.label) {
-                                    case 0:
-                                        newPhoto = new Photo_1.default({
-                                            user: userId,
-                                            unSplashId: photo.photoId,
-                                            pictureUrl: photo.photoUrl
-                                        });
-                                        return [4 /*yield*/, newPhoto.save()];
-                                    case 1:
-                                        result = _a.sent();
-                                        photoIds.push(result.id);
-                                        return [2 /*return*/];
-                                }
-                            });
-                        }); });
-                        return [4 /*yield*/, User_1.default.find({ id: userId })];
+                        _b.trys.push([1, 5, , 6]);
+                        return [4 /*yield*/, User_1.default.findOne({ _id: userId })];
                     case 2:
                         user = _b.sent();
-                        user.keyWords = photoIds;
-                        res.send("photo save route");
-                        return [3 /*break*/, 4];
+                        if (!user) {
+                            throw new Error();
+                        }
+                        if (!(user !== null)) return [3 /*break*/, 4];
+                        user.keyWords.push(keyWords);
+                        user.photos = photoIds;
+                        return [4 /*yield*/, user.save()];
                     case 3:
+                        _b.sent();
+                        _b.label = 4;
+                    case 4: return [3 /*break*/, 6];
+                    case 5:
                         err_1 = _b.sent();
                         console.log(err_1);
-                        return [3 /*break*/, 4];
-                    case 4: return [2 /*return*/];
+                        return [3 /*break*/, 6];
+                    case 6: return [2 /*return*/];
                 }
             });
         }); };

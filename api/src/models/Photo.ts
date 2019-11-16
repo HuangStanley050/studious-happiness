@@ -1,11 +1,11 @@
-import * as mongoose from "mongoose";
+import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
-interface Photo {
+export type PhotoDocument = mongoose.Document & {
   unSplashId: string;
   pictureUrl: string;
   user: string;
-}
+};
 
 const photoSchema = new Schema({
   unSplashId: {
@@ -22,4 +22,4 @@ const photoSchema = new Schema({
   }
 });
 
-export default mongoose.model<Photo & mongoose.Document>("Photo", photoSchema);
+export default mongoose.model<PhotoDocument>("Photo", photoSchema);
