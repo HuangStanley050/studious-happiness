@@ -64,7 +64,8 @@ class AuthController implements Controller {
       };
       const userInfo = {
         name: user.name,
-        email: user.email
+        email: user.email,
+        id: user.id
       };
       const token = jwt.sign(payload, jwtSecret, { expiresIn: "1h" });
       return res.json({ login: "success", token, userInfo });

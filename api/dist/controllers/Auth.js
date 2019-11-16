@@ -97,7 +97,8 @@ var AuthController = /** @class */ (function () {
                         };
                         userInfo = {
                             name: user.name,
-                            email: user.email
+                            email: user.email,
+                            id: user.id
                         };
                         token = jsonwebtoken_1.default.sign(payload, jwtSecret, { expiresIn: "1h" });
                         return [2 /*return*/, res.json({ login: "success", token: token, userInfo: userInfo })];

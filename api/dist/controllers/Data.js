@@ -41,6 +41,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = __importDefault(require("express"));
 var axios_1 = __importDefault(require("axios"));
+var Photo_1 = __importDefault(require("../models/Photo"));
+var User_1 = __importDefault(require("../models/User"));
 var Middlewares_1 = __importDefault(require("../Middlewares"));
 var DataController = /** @class */ (function () {
     function DataController() {
@@ -51,13 +53,57 @@ var DataController = /** @class */ (function () {
             _this.router
                 .all(_this.path + "/*", Middlewares_1.default.checkAuth)
                 .get("" + _this.path, _this.rootRoute)
+                .post(_this.path + "/photos", _this.savePhotosRoute)
                 .get(_this.path + "/photos", _this.getPhotosRoute);
         };
         this.rootRoute = function (req, res) {
             res.send("Data route");
         };
+        this.savePhotosRoute = function (req, res, next) { return __awaiter(_this, void 0, void 0, function () {
+            var _a, userId, photoInfo, keyWords, photoIds, user, err_1;
+            var _this = this;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        _a = req.body, userId = _a.userId, photoInfo = _a.photoInfo, keyWords = _a.keyWords;
+                        photoIds = [];
+                        _b.label = 1;
+                    case 1:
+                        _b.trys.push([1, 3, , 4]);
+                        photoInfo.map(function (photo) { return __awaiter(_this, void 0, void 0, function () {
+                            var newPhoto, result;
+                            return __generator(this, function (_a) {
+                                switch (_a.label) {
+                                    case 0:
+                                        newPhoto = new Photo_1.default({
+                                            user: userId,
+                                            unSplashId: photo.photoId,
+                                            pictureUrl: photo.photoUrl
+                                        });
+                                        return [4 /*yield*/, newPhoto.save()];
+                                    case 1:
+                                        result = _a.sent();
+                                        photoIds.push(result.id);
+                                        return [2 /*return*/];
+                                }
+                            });
+                        }); });
+                        return [4 /*yield*/, User_1.default.find({ id: userId })];
+                    case 2:
+                        user = _b.sent();
+                        user.keyWords = photoIds;
+                        res.send("photo save route");
+                        return [3 /*break*/, 4];
+                    case 3:
+                        err_1 = _b.sent();
+                        console.log(err_1);
+                        return [3 /*break*/, 4];
+                    case 4: return [2 /*return*/];
+                }
+            });
+        }); };
         this.getPhotosRoute = function (req, res, next) { return __awaiter(_this, void 0, void 0, function () {
-            var keywords, apiKey, queryString, result, err_1, error;
+            var keywords, apiKey, queryString, result, err_2, error;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -73,8 +119,8 @@ var DataController = /** @class */ (function () {
                         res.json({ msg: "fetch success", result: result.data });
                         return [3 /*break*/, 4];
                     case 3:
-                        err_1 = _a.sent();
-                        console.log(err_1);
+                        err_2 = _a.sent();
+                        console.log(err_2);
                         error = { message: "Unable to fetch photos", status: 500 };
                         return [2 /*return*/, next(error)];
                     case 4: return [2 /*return*/];
