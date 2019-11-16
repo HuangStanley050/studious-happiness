@@ -18,8 +18,10 @@ class DataController implements Controller {
     this.initializeRoutes();
   }
   initializeRoutes = () => {
-    this.router.get(`${this.path}`, MiddleWare.checkAuth, this.rootRoute);
-    this.router.get(`${this.path}/photos`, this.getPhotosRoute);
+    this.router
+      .all(`${this.path}/*`, MiddleWare.checkAuth)
+      .get(`${this.path}`, this.rootRoute)
+      .get(`${this.path}/photos`, this.getPhotosRoute);
   };
   private rootRoute = (req: Request, res: Response) => {
     res.send("Data route");
@@ -38,6 +40,8 @@ class DataController implements Controller {
       res.json({ msg: "fetch success", result: result.data });
     } catch (err) {
       console.log(err);
+      let error: Error = { message: "Unable to fetch photos", status: 500 };
+      return next(error);
     }
   };
 }

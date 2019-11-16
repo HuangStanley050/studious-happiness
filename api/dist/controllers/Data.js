@@ -48,14 +48,16 @@ var DataController = /** @class */ (function () {
         this.path = "/data";
         this.router = express_1.default.Router();
         this.initializeRoutes = function () {
-            _this.router.get("" + _this.path, Middlewares_1.default.checkAuth, _this.rootRoute);
-            _this.router.get(_this.path + "/photos", _this.getPhotosRoute);
+            _this.router
+                .all(_this.path + "/*", Middlewares_1.default.checkAuth)
+                .get("" + _this.path, _this.rootRoute)
+                .get(_this.path + "/photos", _this.getPhotosRoute);
         };
         this.rootRoute = function (req, res) {
             res.send("Data route");
         };
         this.getPhotosRoute = function (req, res, next) { return __awaiter(_this, void 0, void 0, function () {
-            var keywords, apiKey, queryString, result, err_1;
+            var keywords, apiKey, queryString, result, err_1, error;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -73,7 +75,8 @@ var DataController = /** @class */ (function () {
                     case 3:
                         err_1 = _a.sent();
                         console.log(err_1);
-                        return [3 /*break*/, 4];
+                        error = { message: "Unable to fetch photos", status: 500 };
+                        return [2 /*return*/, next(error)];
                     case 4: return [2 /*return*/];
                 }
             });
