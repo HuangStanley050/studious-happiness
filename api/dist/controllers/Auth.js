@@ -44,7 +44,7 @@ var express_validator_1 = require("express-validator");
 var bcryptjs_1 = __importDefault(require("bcryptjs"));
 var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 var User_1 = __importDefault(require("../models/User"));
-var jwtSecret = process.env.JWT_SECRET || "I am batman";
+var jwtSecret = process.env.JWT_SECRET;
 var AuthController = /** @class */ (function () {
     function AuthController() {
         var _this = this;

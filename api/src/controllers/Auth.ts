@@ -11,7 +11,7 @@ declare var process: {
   };
 };
 
-const jwtSecret = process.env.JWT_SECRET || "I am batman";
+const jwtSecret = process.env.JWT_SECRET;
 class AuthController implements Controller {
   public path: string = "/auth";
   public router: IRouter = express.Router();
