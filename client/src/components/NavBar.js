@@ -1,8 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { Menu } from "semantic-ui-react";
 import { Link } from "react-router-dom";
+import TekkenLogo from "../tekkenLogo.png";
 
 const NavBar = props => {
+  const [activeLink, setActiveLink] = useState("");
+  const handleLinkClick = (e, { name }) => {
+    const link = name;
+
+    setActiveLink(link);
+  };
   return (
     <Menu size="large" stackable position="right">
       <Menu.Item>
@@ -13,9 +20,9 @@ const NavBar = props => {
           name="login"
           as={Link}
           to="/login"
-
+          active={activeLink === "login"}
           // active={activeItem === "features"}
-          // onClick={this.handleItemClick}
+          onClick={handleLinkClick}
         >
           Login
         </Menu.Item>
@@ -24,8 +31,9 @@ const NavBar = props => {
           name="dashboard"
           as={Link}
           to="/dashboard"
+          active={activeLink === "dashboard"}
           // active={activeItem === "testimonials"}
-          // onClick={this.handleItemClick}
+          onClick={handleLinkClick}
         >
           Dashboard
         </Menu.Item>
@@ -34,8 +42,9 @@ const NavBar = props => {
           name="photos"
           as={Link}
           to="/photos"
+          active={activeLink === "photos"}
           // active={activeItem === "sign-in"}
-          // onClick={this.handleItemClick}
+          onClick={handleLinkClick}
         >
           Photos
         </Menu.Item>
