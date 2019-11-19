@@ -1,5 +1,8 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 import { Form } from "semantic-ui-react";
+import { login } from "../store/actions/authActions";
 
 const useForm = () => {
   const [form, setValue] = useState({
@@ -24,9 +27,11 @@ const useForm = () => {
 };
 const Login = props => {
   const [form, handleChange, resetFields] = useForm();
+  const { loginStart } = props;
   const handleSubmit = e => {
     e.preventDefault();
-    console.log(form);
+    loginStart(form);
+    resetFields();
   };
   return (
     <div
@@ -62,4 +67,12 @@ const Login = props => {
   );
 };
 
-export default Login;
+Login.propTypes = {
+  loginStart: PropTypes.func.isRequired
+};
+
+const mapDispatchToProps = dispatch => ({
+  loginStart: userInfo => dispatch(login(userInfo))
+});
+
+export default connect(null, mapDispatchToProps)(Login);

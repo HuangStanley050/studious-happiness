@@ -1,4 +1,4 @@
 export default {
-  login: "",
+  login: "http://localhost:3050/api/auth/login",
   loadData: ""
 };
