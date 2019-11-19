@@ -1,3 +1,7 @@
 export const LOGIN_START = "LOGIN_START";
 export const LOGIN_OKAY = "LOGIN_OKAY";
 export const LOGIN_FAIL = "LOGIN_FAIL";
+
+export const FETCH_PHOTOS_START = "FETCH_PHOTOS_START";
+export const FETCH_PHOTOS_OKAY = "FETCH_PHOTOS_OKAY";
+export const FETCH_PHOTOS_FAIL = "FETCH_PHOTOS_FAIL";

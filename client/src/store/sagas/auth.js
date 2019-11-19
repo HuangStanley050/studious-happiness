@@ -14,7 +14,6 @@ function* LoginSagaWorker(action) {
     userInfo = result.data.userInfo;
     yield localStorage.setItem("dockerPhotos", token);
     yield put(loginOkay(userInfo));
-    console.log(result.data);
   } catch (err) {
     console.log(err);
   }
