@@ -11,6 +11,9 @@ services:
     ports:
       - "3050:80"
   api:
+    depends_on:
+      - mongo
+      - nginx
     env_file:
       - ./api/.env
     build:

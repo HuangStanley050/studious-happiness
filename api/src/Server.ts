@@ -15,6 +15,8 @@ declare var process: {
 const port: number = process.env.PORT || 5000;
 const app = new App(port, [authController, dataController]);
 const dataBaseURI = "mongodb://mongo/dockerPhoto";
-mongoose.connect(process.env.MONGODB_URI || dataBaseURI).then(() => {
-  app.listen();
-});
+mongoose
+  .connect(process.env.MONGODB_URI || dataBaseURI, { useNewUrlParser: true })
+  .then(() => {
+    app.listen();
+  });
