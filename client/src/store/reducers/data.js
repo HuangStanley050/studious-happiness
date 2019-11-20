@@ -1,3 +1,5 @@
+import * as actionType from "../actions/actionTypes";
+
 const initialState = {
   data: [],
   loading: false,
@@ -5,7 +7,21 @@ const initialState = {
 };
 
 const reducer = (state = initialState, action) => {
-  return state;
+  switch (action.type) {
+    case actionType.FETCH_PHOTOS_START:
+      return {
+        ...state,
+        loading: true
+      };
+    case actionType.FETCH_PHOTOS_OKAY:
+      console.log(action.data);
+      return {
+        ...state,
+        loading: false
+      };
+    default:
+      return state;
+  }
 };
 
 export default reducer;
