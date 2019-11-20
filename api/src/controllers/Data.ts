@@ -88,7 +88,8 @@ class DataController implements Controller {
   ) => {
     const { keywords } = req.query;
     const apiKey = process.env.SPLASH_API_KEY;
-    const queryString = `https://api.unsplash.com/photos/random?&count=4&query=${keywords}&client_id=${apiKey}`;
+
+    const queryString = `https://api.unsplash.com/photos/random?&count=2&query=${keywords}&client_id=${apiKey}`;
     try {
       let result = await axios.get(queryString);
 
