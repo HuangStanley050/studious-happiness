@@ -6,10 +6,10 @@ import { Grid, Image } from "semantic-ui-react";
 import { fetchStart } from "../store/actions/fetchActions";
 import CardPhoto from "./CardPhoto";
 
-const InfinitePhotos = props => {
+const InfinitePhotos = ({ fetchPhotos, photoData }) => {
   useEffect(() => {
-    props.fetchPhotos();
-  }, [props]);
+    fetchPhotos();
+  }, [fetchPhotos]);
   const [cards, setCards] = useState([
     { name: "yo" },
     { name: "tim" },
@@ -41,9 +41,12 @@ const InfinitePhotos = props => {
   );
 };
 InfinitePhotos.propTypes = {
-  fetchPhotos: PropTypes.func.isRequired
+  fetchPhotos: PropTypes.func.isRequired,
+  photoData: PropTypes.arrayOf(PropTypes.object).isRequired
 };
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+  photoData: state.data.data
+});
 const mapDispatchToProps = dispatch => ({
   fetchPhotos: () => dispatch(fetchStart())
 });

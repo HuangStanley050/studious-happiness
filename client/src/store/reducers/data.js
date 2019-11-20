@@ -14,9 +14,9 @@ const reducer = (state = initialState, action) => {
         loading: true
       };
     case actionType.FETCH_PHOTOS_OKAY:
-      console.log(action.data);
       return {
         ...state,
+        data: [...action.data],
         loading: false
       };
     default:

@@ -12,9 +12,15 @@ function* DataSagaWorker(action) {
       method: "get",
       url: API.loadData
     });
-    yield put(fetchOkay(result.data.result));
+    const transformData = result.data.result.map(photo => {
+      return {
+        photoId: photo.id,
+        photoUrl: photo.urls.regular
+      };
+    });
+    yield put(fetchOkay(transformData));
   } catch (err) {
-    console.log(err.response);
+    console.log(err.message);
   }
 }
 
