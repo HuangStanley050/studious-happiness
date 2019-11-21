@@ -3,10 +3,10 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { Grid, Image } from "semantic-ui-react";
-import { fetchStart } from "../store/actions/fetchActions";
+import { fetchStart, fetchUpdate } from "../store/actions/fetchActions";
 import CardPhoto from "./CardPhoto";
 
-const InfinitePhotos = ({ fetchPhotos, photoData }) => {
+const InfinitePhotos = ({ photoData, keywords, scrollMorePhotos }) => {
   const [cards, setCards] = useState([
     { name: "yo" },
     { name: "tim" },
@@ -15,9 +15,8 @@ const InfinitePhotos = ({ fetchPhotos, photoData }) => {
   ]);
   const [length, setLengh] = useState(4);
   const fetchMoreData = () => {
-    setTimeout(() => {
-      setCards(cards.concat({ name: "hi" }));
-    }, 1500);
+    // if (keywords.length === 0) return;
+    scrollMorePhotos(keywords[keywords.length - 1]);
   };
   return (
     <InfiniteScroll
@@ -38,27 +37,18 @@ const InfinitePhotos = ({ fetchPhotos, photoData }) => {
   );
 };
 InfinitePhotos.propTypes = {
-  fetchPhotos: PropTypes.func.isRequired,
-  photoData: PropTypes.arrayOf(PropTypes.object).isRequired
+  photoData: PropTypes.arrayOf(PropTypes.object).isRequired,
+  keywords: PropTypes.arrayOf(PropTypes.string).isRequired,
+  scrollMorePhotos: PropTypes.func.isRequired
 };
 const mapStateToProps = state => ({
-  photoData: state.data.data
+  photoData: state.data.data,
+  keywords: state.data.keywords
 });
-const mapDispatchToProps = dispatch => ({
-  // fetchPhotos: () => dispatch(fetchStart())
-});
+const mapDispatchToProps = dispatch => {
+  return {
+    scrollMorePhotos: keyword => dispatch(fetchUpdate(keyword))
+  };
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(InfinitePhotos);
-
-// <Grid.Column>
-//   <CardPhoto />
-// </Grid.Column>
-// <Grid.Column>
-//   <CardPhoto />
-// </Grid.Column>
-// <Grid.Column>
-//   <CardPhoto />
-// </Grid.Column>
-// <Grid.Column>
-//   <CardPhoto />
-// </Grid.Column>

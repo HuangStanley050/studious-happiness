@@ -1,6 +1,6 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
-import logo from "./logo.svg";
+
 import "semantic-ui-css/semantic.min.css";
 import NavBar from "./components/NavBar";
 import DashBoard from "./components/DashBoard";

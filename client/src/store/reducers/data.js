@@ -15,6 +15,11 @@ const reducer = (state = initialState, action) => {
         keywords: [...state.keywords, action.keyword],
         loading: true
       };
+    case actionType.FETCH_PHOTOS_SCROLL_OKAY:
+      return {
+        ...state,
+        data: [...state.data, ...action.data]
+      };
     case actionType.FETCH_PHOTOS_OKAY:
       return {
         ...state,
