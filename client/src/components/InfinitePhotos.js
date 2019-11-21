@@ -7,9 +7,6 @@ import { fetchStart } from "../store/actions/fetchActions";
 import CardPhoto from "./CardPhoto";
 
 const InfinitePhotos = ({ fetchPhotos, photoData }) => {
-  useEffect(() => {
-    fetchPhotos();
-  }, [fetchPhotos]);
   const [cards, setCards] = useState([
     { name: "yo" },
     { name: "tim" },
@@ -48,7 +45,7 @@ const mapStateToProps = state => ({
   photoData: state.data.data
 });
 const mapDispatchToProps = dispatch => ({
-  fetchPhotos: () => dispatch(fetchStart())
+  // fetchPhotos: () => dispatch(fetchStart())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(InfinitePhotos);

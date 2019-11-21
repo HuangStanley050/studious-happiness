@@ -1,6 +1,7 @@
 import * as actionType from "../actions/actionTypes";
 
 const initialState = {
+  keywords: [],
   data: [],
   loading: false,
   error: ""
@@ -11,6 +12,7 @@ const reducer = (state = initialState, action) => {
     case actionType.FETCH_PHOTOS_START:
       return {
         ...state,
+        keywords: [...state.keywords, action.keyword],
         loading: true
       };
     case actionType.FETCH_PHOTOS_OKAY:

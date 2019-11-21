@@ -10,7 +10,7 @@ function* DataSagaWorker(action) {
     const result = yield axios({
       headers: { Authorization: `bearer ${token}` },
       method: "get",
-      url: API.loadData
+      url: `${API.loadData}${action.keyword}`
     });
     const transformData = result.data.result.map(photo => {
       return {
