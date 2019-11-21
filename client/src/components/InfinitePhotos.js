@@ -19,21 +19,23 @@ const InfinitePhotos = ({ photoData, keywords, scrollMorePhotos }) => {
     scrollMorePhotos(keywords[keywords.length - 1]);
   };
   return (
-    <InfiniteScroll
-      dataLength={cards.length}
-      next={fetchMoreData}
-      hasMore
-      className="ui stackable two column grid"
-      loader={<h4>Loading...</h4>}
-    >
-      {cards.map((card, index) => {
-        return (
-          <Grid.Column>
-            <CardPhoto key={card.name} />
-          </Grid.Column>
-        );
-      })}
-    </InfiniteScroll>
+    <div style={{ marginTop: "3rem" }}>
+      <InfiniteScroll
+        dataLength={photoData.length}
+        next={fetchMoreData}
+        hasMore
+        className="ui stackable two column grid"
+        loader={<h4>Loading...</h4>}
+      >
+        {photoData.map(photo => {
+          return (
+            <Grid.Column>
+              <CardPhoto imageUrl={photo.photoUrl} key={photo.photoId} />
+            </Grid.Column>
+          );
+        })}
+      </InfiniteScroll>
+    </div>
   );
 };
 InfinitePhotos.propTypes = {

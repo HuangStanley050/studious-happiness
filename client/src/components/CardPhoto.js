@@ -1,13 +1,10 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Card, Icon, Image } from "semantic-ui-react";
 
-const CardPhoto = () => (
+const CardPhoto = ({ imageUrl }) => (
   <Card style={{ margin: "0 auto" }}>
-    <Image
-      src="https://react.semantic-ui.com/images/avatar/large/matthew.png"
-      wrapped
-      ui={false}
-    />
+    <Image src={imageUrl} wrapped ui={false} />
     <Card.Content>
       <Card.Header>Matthew</Card.Header>
       <Card.Meta>
@@ -25,5 +22,7 @@ const CardPhoto = () => (
     </Card.Content>
   </Card>
 );
-
+CardPhoto.propTypes = {
+  imageUrl: PropTypes.string.isRequired
+};
 export default CardPhoto;
