@@ -137,7 +137,7 @@ var DataController = /** @class */ (function () {
                     case 0:
                         keywords = req.query.keywords;
                         apiKey = process.env.SPLASH_API_KEY;
-                        queryString = "https://api.unsplash.com/photos/random?&count=2&query=" + keywords + "&client_id=" + apiKey;
+                        queryString = "https://api.unsplash.com/photos/random?&count=4&query=" + keywords + "&client_id=" + apiKey;
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
