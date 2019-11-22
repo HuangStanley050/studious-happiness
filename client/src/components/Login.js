@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
+import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { Form } from "semantic-ui-react";
 import { login } from "../store/actions/authActions";
@@ -25,14 +26,17 @@ const useForm = () => {
 
   return [form, handleChange, resetFields];
 };
-const Login = props => {
+const Login = ({ isAuth, loginStart }) => {
   const [form, handleChange, resetFields] = useForm();
-  const { loginStart } = props;
+
   const handleSubmit = e => {
     e.preventDefault();
     loginStart(form);
     resetFields();
   };
+  if (isAuth) {
+    return <Redirect to="/dashboard" />;
+  }
   return (
     <div
       style={{
@@ -68,11 +72,12 @@ const Login = props => {
 };
 
 Login.propTypes = {
-  loginStart: PropTypes.func.isRequired
+  loginStart: PropTypes.func.isRequired,
+  isAuth: PropTypes.bool.isRequired
 };
-
+const mapStateToProps = state => ({ isAuth: state.auth.isAuth });
 const mapDispatchToProps = dispatch => ({
   loginStart: userInfo => dispatch(login(userInfo))
 });
 
-export default connect(null, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

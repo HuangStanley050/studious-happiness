@@ -7,6 +7,10 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+body {
+  overflow-y: scroll;
+}
+
 main {
   min-height: 100vh;
 }

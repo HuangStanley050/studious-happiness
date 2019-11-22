@@ -1,19 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { Grid, Image } from "semantic-ui-react";
-import { fetchStart, fetchUpdate } from "../store/actions/fetchActions";
+import { Grid } from "semantic-ui-react";
+import { fetchUpdate } from "../store/actions/fetchActions";
 import CardPhoto from "./CardPhoto";
 
 const InfinitePhotos = ({ photoData, keywords, scrollMorePhotos }) => {
-  const [cards, setCards] = useState([
-    { name: "yo" },
-    { name: "tim" },
-    { name: "stuff" },
-    { name: "again" }
-  ]);
-  const [length, setLengh] = useState(4);
   const fetchMoreData = () => {
     // if (keywords.length === 0) return;
     scrollMorePhotos(keywords[keywords.length - 1]);
@@ -25,12 +18,15 @@ const InfinitePhotos = ({ photoData, keywords, scrollMorePhotos }) => {
         next={fetchMoreData}
         hasMore
         className="ui stackable two column grid"
-        loader={<h4>Loading...</h4>}
       >
         {photoData.map(photo => {
           return (
             <Grid.Column>
-              <CardPhoto imageUrl={photo.photoUrl} key={photo.photoId} />
+              <CardPhoto
+                id={photo.photoId}
+                imageUrl={photo.photoUrl}
+                key={photo.photoId}
+              />
             </Grid.Column>
           );
         })}
