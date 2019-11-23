@@ -131,27 +131,45 @@ var DataController = /** @class */ (function () {
             });
         }); };
         this.getPhotosRoute = function (req, res, next) { return __awaiter(_this, void 0, void 0, function () {
-            var keywords, apiKey, queryString, result, err_2, error;
+            var keywords, userId, apiKey, currentUser, queryString, currentUser_1, err_2, result, err_3, error;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         keywords = req.query.keywords;
+                        userId = req.userId;
                         apiKey = process.env.SPLASH_API_KEY;
                         queryString = "https://api.unsplash.com/photos/random?&count=4&query=" + keywords + "&client_id=" + apiKey;
                         _a.label = 1;
                     case 1:
-                        _a.trys.push([1, 3, , 4]);
-                        return [4 /*yield*/, axios_1.default.get(queryString)];
+                        _a.trys.push([1, 5, , 6]);
+                        return [4 /*yield*/, User_1.default.findOne({ _id: userId })];
                     case 2:
-                        result = _a.sent();
-                        res.json({ msg: "fetch success", result: result.data });
-                        return [3 /*break*/, 4];
+                        currentUser_1 = _a.sent();
+                        if (!currentUser_1) return [3 /*break*/, 4];
+                        //saving the keyword that user used to search for photos
+                        currentUser_1.keyWords.push(keywords);
+                        return [4 /*yield*/, currentUser_1.save()];
                     case 3:
+                        _a.sent();
+                        _a.label = 4;
+                    case 4: return [3 /*break*/, 6];
+                    case 5:
                         err_2 = _a.sent();
                         console.log(err_2);
+                        return [3 /*break*/, 6];
+                    case 6:
+                        _a.trys.push([6, 8, , 9]);
+                        return [4 /*yield*/, axios_1.default.get(queryString)];
+                    case 7:
+                        result = _a.sent();
+                        res.json({ msg: "fetch success", result: result.data });
+                        return [3 /*break*/, 9];
+                    case 8:
+                        err_3 = _a.sent();
+                        console.log(err_3);
                         error = { message: "Unable to fetch photos", status: 500 };
                         return [2 /*return*/, next(error)];
-                    case 4: return [2 /*return*/];
+                    case 9: return [2 /*return*/];
                 }
             });
         }); };

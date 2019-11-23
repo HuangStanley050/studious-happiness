@@ -5,6 +5,7 @@ import Photo from "../models/Photo";
 import User from "../models/User";
 import { Controller } from "../App";
 import { Error } from "../App";
+import { RequestCustom } from "../Middlewares";
 import MiddleWare from "../Middlewares";
 
 declare var process: {
@@ -82,14 +83,25 @@ class DataController implements Controller {
     }
   };
   private getPhotosRoute = async (
-    req: Request,
+    req: RequestCustom,
     res: Response,
     next: NextFunction
   ) => {
     const { keywords } = req.query;
+    const userId = req.userId;
     const apiKey = process.env.SPLASH_API_KEY;
-
+    let currentUser: typeof User;
     const queryString = `https://api.unsplash.com/photos/random?&count=4&query=${keywords}&client_id=${apiKey}`;
+    try {
+      let currentUser = await User.findOne({ _id: userId });
+      if (currentUser) {
+        //saving the keyword that user used to search for photos
+        currentUser.keyWords.push(keywords);
+        await currentUser.save();
+      }
+    } catch (err) {
+      console.log(err);
+    }
     try {
       let result = await axios.get(queryString);
 

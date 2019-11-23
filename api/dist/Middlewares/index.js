@@ -27,6 +27,8 @@ exports.default = {
             var error = { message: "Unable to decode token", status: 401 };
             return next(error);
         }
+        var userId = decodedToken.id;
+        req.userId = userId;
         return next();
     }
 };

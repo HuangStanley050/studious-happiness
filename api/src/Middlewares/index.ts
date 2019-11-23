@@ -8,8 +8,12 @@ declare var process: {
   };
 };
 
+export interface RequestCustom extends Request {
+  userId: string;
+}
+
 export default {
-  checkAuth: (req: Request, res: Response, next: NextFunction) => {
+  checkAuth: (req: RequestCustom, res: Response, next: NextFunction) => {
     //check if request header has a token field if not throw error to next
     let token: string;
     let decodedToken: any;
@@ -31,6 +35,8 @@ export default {
       const error: Error = { message: "Unable to decode token", status: 401 };
       return next(error);
     }
+    let userId = decodedToken.id;
+    req.userId = userId;
     return next();
   }
 };
