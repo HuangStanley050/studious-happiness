@@ -4,12 +4,10 @@ import { Container } from "semantic-ui-react";
 import { connect } from "react-redux";
 import SearchBox from "./SearchBox";
 import InfinitePhotos from "./InfinitePhotos";
-import Spinner from "./Spinner";
 
-const Photos = ({ loading }) => {
+const Photos = () => {
   return (
     <Container>
-      {loading && <Spinner />}
       <div
         style={{ marginTop: "2rem", display: "flex", justifyContent: "center" }}
       >
@@ -21,10 +19,5 @@ const Photos = ({ loading }) => {
     </Container>
   );
 };
-Photos.propTypes = {
-  loading: PropTypes.bool.isRequired
-};
-const mapStateToProps = state => ({
-  loading: state.data.loading
-});
-export default connect(mapStateToProps)(Photos);
+
+export default Photos;
