@@ -4,7 +4,8 @@ const initialState = {
   isAuth: false,
   userInfo: null,
   loading: false,
-  error: ""
+  error: "",
+  keywords: []
 };
 
 const reducer = (state = initialState, action) => {
@@ -19,6 +20,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         loading: false,
         isAuth: true,
+        keywords: [...action.userInfo.searchResults],
         userInfo: {
           ...state.userInfo,
           ...action.userInfo

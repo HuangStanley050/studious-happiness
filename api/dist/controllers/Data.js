@@ -35,12 +35,25 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var __spreadArrays = (this && this.__spreadArrays) || function () {
-    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
-    for (var r = Array(s), k = 0, i = 0; i < il; i++)
-        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
-            r[k] = a[j];
-    return r;
+var __read = (this && this.__read) || function (o, n) {
+    var m = typeof Symbol === "function" && o[Symbol.iterator];
+    if (!m) return o;
+    var i = m.call(o), r, ar = [], e;
+    try {
+        while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
+    }
+    catch (error) { e = { error: error }; }
+    finally {
+        try {
+            if (r && !r.done && (m = i["return"])) m.call(i);
+        }
+        finally { if (e) throw e.error; }
+    }
+    return ar;
+};
+var __spread = (this && this.__spread) || function () {
+    for (var ar = [], i = 0; i < arguments.length; i++) ar = ar.concat(__read(arguments[i]));
+    return ar;
 };
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
@@ -111,7 +124,7 @@ var DataController = /** @class */ (function () {
                         }
                         if (!(user !== null)) return [3 /*break*/, 4];
                         user.keyWords.push(keyWords);
-                        user.photos = __spreadArrays(user.photos, photoIds);
+                        user.photos = __spread(user.photos, photoIds);
                         return [4 /*yield*/, user.save()];
                     case 3:
                         _b.sent();
@@ -131,13 +144,14 @@ var DataController = /** @class */ (function () {
             });
         }); };
         this.getPhotosRoute = function (req, res, next) { return __awaiter(_this, void 0, void 0, function () {
-            var keywords, userId, apiKey, currentUser, queryString, currentUser_1, err_2, result, err_3, error;
+            var keywords, userId, apiKey, currentUser, searchResults, queryString, currentUser_1, err_2, result, err_3, error;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         keywords = req.query.keywords;
                         userId = req.userId;
                         apiKey = process.env.SPLASH_API_KEY;
+                        searchResults = [];
                         queryString = "https://api.unsplash.com/photos/random?&count=4&query=" + keywords + "&client_id=" + apiKey;
                         _a.label = 1;
                     case 1:
@@ -148,8 +162,10 @@ var DataController = /** @class */ (function () {
                         if (!currentUser_1) return [3 /*break*/, 4];
                         //saving the keyword that user used to search for photos
                         currentUser_1.keyWords.push(keywords);
+                        //console.log(searchResults);
                         return [4 /*yield*/, currentUser_1.save()];
                     case 3:
+                        //console.log(searchResults);
                         _a.sent();
                         _a.label = 4;
                     case 4: return [3 /*break*/, 6];
@@ -162,7 +178,10 @@ var DataController = /** @class */ (function () {
                         return [4 /*yield*/, axios_1.default.get(queryString)];
                     case 7:
                         result = _a.sent();
-                        res.json({ msg: "fetch success", result: result.data });
+                        res.json({
+                            msg: "fetch success",
+                            result: result.data
+                        });
                         return [3 /*break*/, 9];
                     case 8:
                         err_3 = _a.sent();

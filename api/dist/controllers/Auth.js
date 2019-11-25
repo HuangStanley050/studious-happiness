@@ -35,6 +35,26 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __read = (this && this.__read) || function (o, n) {
+    var m = typeof Symbol === "function" && o[Symbol.iterator];
+    if (!m) return o;
+    var i = m.call(o), r, ar = [], e;
+    try {
+        while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
+    }
+    catch (error) { e = { error: error }; }
+    finally {
+        try {
+            if (r && !r.done && (m = i["return"])) m.call(i);
+        }
+        finally { if (e) throw e.error; }
+    }
+    return ar;
+};
+var __spread = (this && this.__spread) || function () {
+    for (var ar = [], i = 0; i < arguments.length; i++) ar = ar.concat(__read(arguments[i]));
+    return ar;
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -69,11 +89,12 @@ var AuthController = /** @class */ (function () {
             res.send("Auth route");
         };
         this.loginRoute = function (req, res, next) { return __awaiter(_this, void 0, void 0, function () {
-            var _a, email, password, user, passwordMatch, error, payload, userInfo, token, err_1, error;
+            var _a, email, password, searchResults, user, passwordMatch, error, payload, userInfo, token, err_1, error;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
                         _a = req.body, email = _a.email, password = _a.password;
+                        searchResults = [];
                         _b.label = 1;
                     case 1:
                         _b.trys.push([1, 4, , 5]);
@@ -91,6 +112,15 @@ var AuthController = /** @class */ (function () {
                             error = { status: 401, message: "Password doesn't match" };
                             return [2 /*return*/, next(error)];
                         }
+                        if (user.keyWords.length >= 20) {
+                            // resturn the last 20 search results but no repeat
+                            searchResults = user.keyWords.slice(Math.max(user.keyWords.length - 20, 1));
+                        }
+                        else {
+                            //other wise return all if less than 20
+                            searchResults = user.keyWords.slice();
+                        }
+                        searchResults = __spread(new Set(searchResults));
                         payload = {
                             id: user.id,
                             email: user.email
@@ -98,7 +128,8 @@ var AuthController = /** @class */ (function () {
                         userInfo = {
                             name: user.name,
                             email: user.email,
-                            id: user.id
+                            id: user.id,
+                            searchResults: searchResults
                         };
                         token = jsonwebtoken_1.default.sign(payload, jwtSecret, { expiresIn: "1h" });
                         return [2 /*return*/, res.json({ login: "success", token: token, userInfo: userInfo })];

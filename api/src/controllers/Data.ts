@@ -91,12 +91,15 @@ class DataController implements Controller {
     const userId = req.userId;
     const apiKey = process.env.SPLASH_API_KEY;
     let currentUser: typeof User;
+    let searchResults: string[] = [];
     const queryString = `https://api.unsplash.com/photos/random?&count=4&query=${keywords}&client_id=${apiKey}`;
     try {
       let currentUser = await User.findOne({ _id: userId });
       if (currentUser) {
         //saving the keyword that user used to search for photos
         currentUser.keyWords.push(keywords);
+
+        //console.log(searchResults);
         await currentUser.save();
       }
     } catch (err) {
@@ -105,7 +108,10 @@ class DataController implements Controller {
     try {
       let result = await axios.get(queryString);
 
-      res.json({ msg: "fetch success", result: result.data });
+      res.json({
+        msg: "fetch success",
+        result: result.data
+      });
     } catch (err) {
       console.log(err);
       let error: Error = { message: "Unable to fetch photos", status: 500 };

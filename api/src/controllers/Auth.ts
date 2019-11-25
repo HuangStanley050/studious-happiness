@@ -47,6 +47,7 @@ class AuthController implements Controller {
     next: NextFunction
   ) => {
     const { email, password } = req.body;
+    let searchResults: string[] = [];
     try {
       let user = await User.findOne({ email });
       if (!user) {
@@ -58,6 +59,17 @@ class AuthController implements Controller {
         let error = { status: 401, message: "Password doesn't match" };
         return next(error);
       }
+      if (user.keyWords.length >= 20) {
+        // resturn the last 20 search results but no repeat
+        searchResults = user.keyWords.slice(
+          Math.max(user.keyWords.length - 20, 1)
+        );
+      } else {
+        //other wise return all if less than 20
+        searchResults = user.keyWords.slice();
+      }
+      searchResults = [...new Set(searchResults)];
+
       const payload = {
         id: user.id,
         email: user.email
@@ -65,7 +77,8 @@ class AuthController implements Controller {
       const userInfo = {
         name: user.name,
         email: user.email,
-        id: user.id
+        id: user.id,
+        searchResults
       };
       const token = jwt.sign(payload, jwtSecret, { expiresIn: "1h" });
       return res.json({ login: "success", token, userInfo });
