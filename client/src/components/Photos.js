@@ -4,6 +4,7 @@ import { Container } from "semantic-ui-react";
 import { connect } from "react-redux";
 import SearchBox from "./SearchBox";
 import InfinitePhotos from "./InfinitePhotos";
+import RecentSearches from "./RecentSearches";
 
 const Photos = () => {
   return (
@@ -12,6 +13,9 @@ const Photos = () => {
         style={{ marginTop: "2rem", display: "flex", justifyContent: "center" }}
       >
         <SearchBox />
+      </div>
+      <div>
+        <RecentSearches />
       </div>
       <div style={{ marginTop: "2rem", minHeight: "700px" }}>
         <InfinitePhotos />
