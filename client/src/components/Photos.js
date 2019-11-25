@@ -13,7 +13,7 @@ const Photos = () => {
       >
         <SearchBox />
       </div>
-      <div style={{ marginTop: "2rem" }}>
+      <div style={{ marginTop: "2rem", minHeight: "700px" }}>
         <InfinitePhotos />
       </div>
     </Container>
