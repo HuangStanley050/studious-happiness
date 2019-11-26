@@ -21,12 +21,8 @@ const InfinitePhotos = ({ photoData, keywords, scrollMorePhotos }) => {
       >
         {photoData.map(photo => {
           return (
-            <Grid.Column>
-              <CardPhoto
-                id={photo.photoId}
-                imageUrl={photo.photoUrl}
-                key={photo.photoId}
-              />
+            <Grid.Column key={photo.photoId}>
+              <CardPhoto id={photo.photoId} imageUrl={photo.photoUrl} />
             </Grid.Column>
           );
         })}
