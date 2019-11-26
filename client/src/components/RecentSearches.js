@@ -2,8 +2,9 @@ import React from "react";
 import { Label } from "semantic-ui-react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { fetchStart } from "../store/actions/fetchActions";
 
-const RecentSearches = ({ keywords }) => {
+const RecentSearches = ({ keywords, fetchPhotos }) => {
   return (
     <div
       style={{
@@ -14,7 +15,12 @@ const RecentSearches = ({ keywords }) => {
       }}
     >
       {keywords.map(key => (
-        <Label color="blue" key={key}>
+        <Label
+          style={{ cursor: "pointer" }}
+          onClick={() => fetchPhotos(key)}
+          color="blue"
+          key={key}
+        >
           {key}
         </Label>
       ))}
@@ -22,9 +28,13 @@ const RecentSearches = ({ keywords }) => {
   );
 };
 RecentSearches.propTypes = {
-  keywords: PropTypes.arrayOf(PropTypes.string).isRequired
+  keywords: PropTypes.arrayOf(PropTypes.string).isRequired,
+  fetchPhotos: PropTypes.func.isRequired
 };
 const mapStateToProps = state => ({
   keywords: state.auth.keywords
 });
-export default connect(mapStateToProps)(RecentSearches);
+const mapDispatchToProps = dispatch => ({
+  fetchPhotos: key => dispatch(fetchStart(key))
+});
+export default connect(mapStateToProps, mapDispatchToProps)(RecentSearches);
