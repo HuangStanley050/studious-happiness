@@ -9,3 +9,4 @@ export const loginFail = errorMsg => ({
   type: actionType.LOGIN_FAIL,
   errorMsg
 });
+export const logout = () => ({ type: actionType.LOGOUT });

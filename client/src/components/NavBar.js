@@ -3,10 +3,15 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { Menu } from "semantic-ui-react";
 import { Link, withRouter } from "react-router-dom";
+import { logout } from "../store/actions/authActions";
 
 const NavBar = props => {
   const { location, isAuth } = props;
-
+  const handleLogout = () => {
+    if (window.confirm("Are you logging out?")) {
+      props.logout();
+    }
+  };
   return (
     <Menu size="large" stackable position="right">
       <Menu.Item>
@@ -23,6 +28,11 @@ const NavBar = props => {
             Login
           </Menu.Item>
         )}
+        {isAuth ? (
+          <Menu.Item onClick={handleLogout} name="logout">
+            Logout
+          </Menu.Item>
+        ) : null}
 
         {isAuth ? (
           <Menu.Item
@@ -53,9 +63,13 @@ const NavBar = props => {
 };
 NavBar.propTypes = {
   location: PropTypes.objectOf(PropTypes.string).isRequired,
-  isAuth: PropTypes.bool.isRequired
+  isAuth: PropTypes.bool.isRequired,
+  logout: PropTypes.func.isRequired
 };
 const mapStateToProps = state => ({
   isAuth: state.auth.isAuth
 });
-export default withRouter(connect(mapStateToProps)(NavBar));
+const mapDispatchToProps = dispatch => ({
+  logout: () => dispatch(logout())
+});
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(NavBar));

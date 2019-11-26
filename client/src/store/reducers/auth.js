@@ -10,6 +10,14 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case actionType.LOGOUT:
+      localStorage.removeItem("dockerPhotos");
+      return {
+        ...state,
+        isAuth: false,
+        userInfo: null,
+        keywords: []
+      };
     case actionType.LOGIN_START:
       return {
         ...state,
