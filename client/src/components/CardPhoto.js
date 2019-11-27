@@ -7,7 +7,7 @@ const CardPhoto = ({ imageUrl, id, savePhoto }) => (
     <Image src={imageUrl} wrapped ui={false} />
     <Card.Content>
       <Card.Header>Photo id: {id}</Card.Header>
-      <Button onClick={() => savePhoto()} basic color="green">
+      <Button onClick={() => savePhoto(imageUrl, id)} basic color="green">
         Save Photo
       </Button>
       <Icon style={{ marginLeft: "2rem" }} name="checkmark" />

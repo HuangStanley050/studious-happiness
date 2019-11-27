@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -7,15 +7,14 @@ import { fetchUpdate } from "../store/actions/fetchActions";
 import CardPhoto from "./CardPhoto";
 
 const InfinitePhotos = ({ photoData, keywords, scrollMorePhotos }) => {
-  const [photoId, setPhotoId] = useState("");
-  const [photoUrl, setPhotoUrl] = useState("");
   const [photos, setPhotos] = useState([]);
   const fetchMoreData = () => {
     // if (keywords.length === 0) return;
     scrollMorePhotos(keywords[keywords.length - 1]);
   };
-  const savePhotoHandler = e => {
-    console.log("you clicked it");
+  const savePhotoHandler = (imageUrl, id) => {
+    setPhotos([...photos, { imageUrl, id }]);
+    console.log(photos);
   };
   return (
     <div style={{ marginTop: "3rem" }}>
