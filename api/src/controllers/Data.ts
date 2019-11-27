@@ -6,7 +6,7 @@ import User from "../models/User";
 import { Controller } from "../App";
 import { Error } from "../App";
 import { RequestCustom } from "../Middlewares";
-import MiddleWare from "../Middlewares";
+import Middlewares from "../Middlewares";
 
 declare var process: {
   env: {
@@ -27,7 +27,7 @@ class DataController implements Controller {
   }
   initializeRoutes = () => {
     this.router
-      .all(`${this.path}/*`, MiddleWare.checkAuth)
+      .all(`${this.path}/*`, Middlewares.checkAuth)
       .get(`${this.path}`, this.rootRoute)
       .post(`${this.path}/photos`, this.savePhotosRoute)
       .get(`${this.path}/photos`, this.getPhotosRoute);

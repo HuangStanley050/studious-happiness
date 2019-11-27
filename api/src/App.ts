@@ -1,4 +1,4 @@
-import express, { Request, Response, NextFunction } from "express";
+import express, { Express, Request, Response, NextFunction } from "express";
 import cors from "cors";
 
 export interface Controller {
@@ -11,7 +11,7 @@ export interface Error {
 }
 
 export class App {
-  public app: express.Application;
+  public app: Express;
   public port: number;
 
   constructor(port: number, controllers: Controller[]) {

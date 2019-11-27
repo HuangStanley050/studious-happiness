@@ -13,7 +13,7 @@ export interface RequestCustom extends Request {
 }
 
 export default {
-  checkAuth: (req: RequestCustom, res: Response, next: NextFunction) => {
+  checkAuth: (req: RequestCustom, res: Response, next: NextFunction): void => {
     //check if request header has a token field if not throw error to next
     let token: string;
     let decodedToken: any;
