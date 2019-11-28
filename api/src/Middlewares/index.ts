@@ -9,7 +9,7 @@ declare var process: {
 };
 
 export interface RequestCustom extends Request {
-  userId?: string;
+  userId?: string; //optional as other routes have no need for userId
 }
 
 export default {
