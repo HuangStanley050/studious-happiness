@@ -16,18 +16,26 @@ const InfinitePhotos = ({ photoData, keywords, scrollMorePhotos, save }) => {
   const savePhotoHandler = (imageUrl, id) => {
     setPhotos([...photos, { imageUrl, id }]);
   };
-  const submitPhotosHandler = photos => {
-    console.log(photos);
+  const submitPhotosHandler = () => {
+    if (photos.length === 0) {
+      alert("No photos selected");
+      return;
+    }
+    save(photos);
   };
 
   return (
     <div style={{ marginTop: "3rem" }}>
-      <Button animated="vertical">
-        <Button.Content hidden>Save</Button.Content>
-        <Button.Content visible>
-          <Icon name="save outline" />
-        </Button.Content>
-      </Button>
+      <Grid>
+        <Grid.Column textAlign="center">
+          <Button onClick={submitPhotosHandler} animated="vertical">
+            <Button.Content hidden>Save</Button.Content>
+            <Button.Content visible>
+              <Icon size="large" name="save outline" />
+            </Button.Content>
+          </Button>
+        </Grid.Column>
+      </Grid>
       <InfiniteScroll
         dataLength={photoData.length}
         next={fetchMoreData}

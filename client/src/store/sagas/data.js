@@ -28,7 +28,12 @@ function* DataSagaWorker(action) {
   }
 }
 
+function* SaveDataSagaWorker(action) {
+  yield console.log(action);
+}
+
 export default function* DataSagaWatcher() {
   yield takeEvery(actionType.FETCH_PHOTOS_START, DataSagaWorker);
   yield takeEvery(actionType.FETCH_PHOTOS_SCROLL, DataSagaWorker);
+  yield takeEvery(actionType.SAVE_PHOTOS_START, SaveDataSagaWorker);
 }
