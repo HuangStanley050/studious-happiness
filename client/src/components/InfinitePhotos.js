@@ -14,7 +14,15 @@ const InfinitePhotos = ({ photoData, keywords, scrollMorePhotos, save }) => {
     scrollMorePhotos(keywords[keywords.length - 1]);
   };
   const savePhotoHandler = (imageUrl, id) => {
-    setPhotos([...photos, { imageUrl, id }]);
+    const photo = photos.findIndex(element => element.id === id);
+    if (photo === -1) {
+      setPhotos([...photos, { imageUrl, id }]);
+    } else {
+      let newPhotos = [];
+      newPhotos = [...photos];
+      newPhotos = newPhotos.filter(currentPhoto => currentPhoto.id !== id);
+      setPhotos([...newPhotos]);
+    }
   };
   const submitPhotosHandler = () => {
     if (photos.length === 0) {
@@ -44,11 +52,11 @@ const InfinitePhotos = ({ photoData, keywords, scrollMorePhotos, save }) => {
       >
         {photoData.map(photo => {
           let show = false;
-          // console.log(photos);
+          // show if the photos in in the saved array
           if (photos.some(element => element.id === photo.photoId)) {
             show = true;
           }
-          console.log(show);
+
           return (
             <Grid.Column key={photo.photoId}>
               <CardPhoto
