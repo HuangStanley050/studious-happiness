@@ -43,9 +43,16 @@ const InfinitePhotos = ({ photoData, keywords, scrollMorePhotos, save }) => {
         className="ui stackable two column grid"
       >
         {photoData.map(photo => {
+          let show = false;
+          // console.log(photos);
+          if (photos.some(element => element.id === photo.photoId)) {
+            show = true;
+          }
+          console.log(show);
           return (
             <Grid.Column key={photo.photoId}>
               <CardPhoto
+                showCheck={show}
                 savePhoto={savePhotoHandler}
                 id={photo.photoId}
                 imageUrl={photo.photoUrl}
