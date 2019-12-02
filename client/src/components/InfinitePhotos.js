@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+import { uuid } from "uuidv4";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -60,7 +60,7 @@ const InfinitePhotos = ({ photoData, keywords, scrollMorePhotos, save }) => {
           }
 
           return (
-            <Grid.Column key={photo.photoId}>
+            <Grid.Column key={uuid()}>
               <CardPhoto
                 showCheck={show}
                 savePhoto={savePhotoHandler}
