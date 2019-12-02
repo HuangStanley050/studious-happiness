@@ -9,6 +9,16 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case actionType.SAVE_PHOTOS_START:
+      return {
+        ...state,
+        loading: true
+      };
+    case actionType.SAVE_PHOTOS_OKAY:
+      return {
+        ...state,
+        loading: false
+      };
     case actionType.FETCH_PHOTOS_START:
       return {
         ...state,

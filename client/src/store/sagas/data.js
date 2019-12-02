@@ -2,6 +2,7 @@ import { takeEvery, put, select } from "redux-saga/effects";
 import axios from "axios";
 import * as actionType from "../actions/actionTypes";
 import { fetchOkay, fetchFail, fetchScrollOkay } from "../actions/fetchActions";
+import { savePhotosOkay } from "../actions/dataActions";
 import API from "../../api";
 
 const getId = state => state.auth.userInfo.id;
@@ -45,7 +46,7 @@ function* SaveDataSagaWorker(action) {
         id
       }
     });
-    console.log(result.data);
+    yield put(savePhotosOkay());
   } catch (err) {
     console.log(err);
   }
