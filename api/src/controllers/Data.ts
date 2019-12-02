@@ -15,8 +15,8 @@ declare var process: {
 };
 
 interface PhotoData {
-  photoId: string;
-  photoUrl: string;
+  id: string;
+  imageUrl: string;
 }
 
 class DataController implements Controller {
@@ -42,17 +42,18 @@ class DataController implements Controller {
   ) => {
     //photoInfo is an array that contain objects that would have photoId and photoUrl
     // [{photoId:1,photoUrl:"www.stock.com"},{photoId:2,photoUrl:"www.stock2.com"}]
-    const { userId, photoInfo, keyWords } = req.body;
+    const { id, photos } = req.body;
     let photoIds: mongoose.Schema.Types.ObjectId[] = [];
     // get each photo from photonInfo array and save userId
     //save each photoId from the data base into user's model array of photos
-
+    // console.log(id);
+    // console.log(photos);
     try {
-      photoInfo.map(async (photo: PhotoData) => {
+      photos.map(async (photo: PhotoData) => {
         let newPhoto = new Photo({
-          user: userId,
-          unSplashId: photo.photoId,
-          pictureUrl: photo.photoUrl
+          user: id,
+          unSplashId: photo.id,
+          pictureUrl: photo.imageUrl
         });
         let result = await newPhoto.save();
         photoIds.push(result._id);
@@ -63,15 +64,15 @@ class DataController implements Controller {
     }
 
     try {
-      let user = await User.findOne({ _id: userId });
+      let user = await User.findOne({ _id: id });
       if (!user) {
         throw new Error();
       }
       if (user !== null) {
-        user.keyWords.push(keyWords);
+        //user.keyWords.push(keyWords);
         user.photos = [...user.photos, ...photoIds];
         await user.save();
-        res.send("op completed");
+        res.send("saving photos completed");
       }
     } catch (err) {
       console.log(err);

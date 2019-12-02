@@ -80,25 +80,27 @@ var DataController = /** @class */ (function () {
             res.send("Data route");
         };
         this.savePhotosRoute = function (req, res, next) { return __awaiter(_this, void 0, void 0, function () {
-            var _a, userId, photoInfo, keyWords, photoIds, error, user, err_1, error;
+            var _a, id, photos, photoIds, error, user, err_1, error;
             var _this = this;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
-                        _a = req.body, userId = _a.userId, photoInfo = _a.photoInfo, keyWords = _a.keyWords;
+                        _a = req.body, id = _a.id, photos = _a.photos;
                         photoIds = [];
                         // get each photo from photonInfo array and save userId
                         //save each photoId from the data base into user's model array of photos
+                        // console.log(id);
+                        // console.log(photos);
                         try {
-                            photoInfo.map(function (photo) { return __awaiter(_this, void 0, void 0, function () {
+                            photos.map(function (photo) { return __awaiter(_this, void 0, void 0, function () {
                                 var newPhoto, result;
                                 return __generator(this, function (_a) {
                                     switch (_a.label) {
                                         case 0:
                                             newPhoto = new Photo_1.default({
-                                                user: userId,
-                                                unSplashId: photo.photoId,
-                                                pictureUrl: photo.photoUrl
+                                                user: id,
+                                                unSplashId: photo.id,
+                                                pictureUrl: photo.imageUrl
                                             });
                                             return [4 /*yield*/, newPhoto.save()];
                                         case 1:
@@ -116,19 +118,19 @@ var DataController = /** @class */ (function () {
                         _b.label = 1;
                     case 1:
                         _b.trys.push([1, 5, , 6]);
-                        return [4 /*yield*/, User_1.default.findOne({ _id: userId })];
+                        return [4 /*yield*/, User_1.default.findOne({ _id: id })];
                     case 2:
                         user = _b.sent();
                         if (!user) {
                             throw new Error();
                         }
                         if (!(user !== null)) return [3 /*break*/, 4];
-                        user.keyWords.push(keyWords);
+                        //user.keyWords.push(keyWords);
                         user.photos = __spread(user.photos, photoIds);
                         return [4 /*yield*/, user.save()];
                     case 3:
                         _b.sent();
-                        res.send("op completed");
+                        res.send("saving photos completed");
                         _b.label = 4;
                     case 4: return [3 /*break*/, 6];
                     case 5:

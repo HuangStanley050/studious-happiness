@@ -34,16 +34,18 @@ const InfinitePhotos = ({ photoData, keywords, scrollMorePhotos, save }) => {
 
   return (
     <div style={{ marginTop: "3rem" }}>
-      <Grid>
-        <Grid.Column textAlign="center">
-          <Button onClick={submitPhotosHandler} animated="vertical">
-            <Button.Content hidden>Save</Button.Content>
-            <Button.Content visible>
-              <Icon size="large" name="save outline" />
-            </Button.Content>
-          </Button>
-        </Grid.Column>
-      </Grid>
+      {photos.length !== 0 ? (
+        <Grid>
+          <Grid.Column textAlign="center">
+            <Button onClick={submitPhotosHandler} animated="vertical">
+              <Button.Content hidden>Save</Button.Content>
+              <Button.Content visible>
+                <Icon size="large" name="save outline" />
+              </Button.Content>
+            </Button>
+          </Grid.Column>
+        </Grid>
+      ) : null}
       <InfiniteScroll
         dataLength={photoData.length}
         next={fetchMoreData}

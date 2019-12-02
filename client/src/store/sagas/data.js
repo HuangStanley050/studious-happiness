@@ -1,8 +1,10 @@
-import { takeEvery, put } from "redux-saga/effects";
+import { takeEvery, put, select } from "redux-saga/effects";
 import axios from "axios";
 import * as actionType from "../actions/actionTypes";
 import { fetchOkay, fetchFail, fetchScrollOkay } from "../actions/fetchActions";
 import API from "../../api";
+
+const getId = state => state.auth.userInfo.id;
 
 function* DataSagaWorker(action) {
   const token = yield localStorage.getItem("dockerPhotos");
@@ -29,7 +31,24 @@ function* DataSagaWorker(action) {
 }
 
 function* SaveDataSagaWorker(action) {
-  yield console.log(action);
+  const id = yield select(getId);
+  const { photos } = action;
+  const token = yield localStorage.getItem("dockerPhotos");
+
+  try {
+    const result = yield axios({
+      headers: { Authorization: `bearer ${token}` },
+      method: "post",
+      url: `${API.saveData}`,
+      data: {
+        photos,
+        id
+      }
+    });
+    console.log(result.data);
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 export default function* DataSagaWatcher() {
