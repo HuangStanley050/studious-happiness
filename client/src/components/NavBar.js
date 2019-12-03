@@ -13,7 +13,7 @@ const NavBar = props => {
     }
   };
   return (
-    <Menu size="large" stackable position="right">
+    <Menu style={{ marginBottom: "0" }} size="large" stackable position="right">
       <Menu.Item>
         <img alt="app logo" src="https://react.semantic-ui.com/logo.png" />
       </Menu.Item>
