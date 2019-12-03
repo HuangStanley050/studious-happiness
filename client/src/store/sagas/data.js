@@ -1,7 +1,13 @@
 import { takeEvery, put, select } from "redux-saga/effects";
 import axios from "axios";
 import * as actionType from "../actions/actionTypes";
-import { fetchOkay, fetchFail, fetchScrollOkay } from "../actions/fetchActions";
+import {
+  fetchOkay,
+  fetchFail,
+  fetchScrollOkay,
+  fetchCollectionOkay,
+  fetchCollectionFail
+} from "../actions/fetchActions";
 import { savePhotosOkay } from "../actions/dataActions";
 import API from "../../api";
 
@@ -31,6 +37,10 @@ function* DataSagaWorker(action) {
   }
 }
 
+function* CollectionSagaWorker(action) {
+  yield console.log(action);
+}
+
 function* SaveDataSagaWorker(action) {
   const id = yield select(getId);
   const { photos } = action;
@@ -56,4 +66,5 @@ export default function* DataSagaWatcher() {
   yield takeEvery(actionType.FETCH_PHOTOS_START, DataSagaWorker);
   yield takeEvery(actionType.FETCH_PHOTOS_SCROLL, DataSagaWorker);
   yield takeEvery(actionType.SAVE_PHOTOS_START, SaveDataSagaWorker);
+  yield takeEvery(actionType.FETCH_COLLECTION_START, CollectionSagaWorker);
 }

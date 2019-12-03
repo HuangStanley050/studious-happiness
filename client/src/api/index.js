@@ -1,5 +1,6 @@
 export default {
   login: "http://localhost:3050/api/auth/login",
   loadData: "http://localhost:3050/api/data/photos?keywords=",
-  saveData: "http://localhost:3050/api/data/photos"
+  saveData: "http://localhost:3050/api/data/photos",
+  collection: "http://localhost:3050/api/data/collections"
 };

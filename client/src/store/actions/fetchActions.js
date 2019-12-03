@@ -1,5 +1,16 @@
 import * as actionType from "./actionTypes";
 
+export const fetchCollectionStart = () => ({
+  type: actionType.FETCH_COLLECTION_START
+});
+export const fetchCollectionOkay = data => ({
+  type: actionType.FETCH_COLLECTION_OKAY,
+  data
+});
+export const fetchCollectionFail = err => ({
+  type: actionType.FETCH_COLLECTION_FAIL,
+  err
+});
 export const fetchStart = keyword => ({
   type: actionType.FETCH_PHOTOS_START,
   keyword
