@@ -13,7 +13,6 @@ declare var process: {
     SPLASH_API_KEY: string;
   };
 };
-
 interface PhotoData {
   id: string;
   imageUrl: string;
@@ -28,6 +27,7 @@ class DataController implements Controller {
   initializeRoutes = () => {
     this.router
       .all(`${this.path}/*`, Middlewares.checkAuth)
+      .get(`${this.path}/collections`, this.getCollectionRoute)
       .get(`${this.path}`, this.rootRoute)
       .post(`${this.path}/photos`, this.savePhotosRoute)
       .get(`${this.path}/photos`, this.getPhotosRoute);
@@ -82,6 +82,21 @@ class DataController implements Controller {
       };
       return next(error);
     }
+  };
+  private getCollectionRoute = async (
+    req: RequestCustom,
+    res: Response,
+    next: NextFunction
+  ) => {
+    const userId = req.userId;
+    let result = await User.findOne({ _id: userId })
+      .populate("photos")
+      .exec();
+
+    res.json({
+      msg: "Able to fetch collections",
+      data: result !== null ? result.photos : null
+    });
   };
   private getPhotosRoute = async (
     req: RequestCustom,

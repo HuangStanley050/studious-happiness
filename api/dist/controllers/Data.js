@@ -72,6 +72,7 @@ var DataController = /** @class */ (function () {
         this.initializeRoutes = function () {
             _this.router
                 .all(_this.path + "/*", Middlewares_1.default.checkAuth)
+                .get(_this.path + "/collections", _this.getCollectionRoute)
                 .get("" + _this.path, _this.rootRoute)
                 .post(_this.path + "/photos", _this.savePhotosRoute)
                 .get(_this.path + "/photos", _this.getPhotosRoute);
@@ -142,6 +143,25 @@ var DataController = /** @class */ (function () {
                         };
                         return [2 /*return*/, next(error)];
                     case 6: return [2 /*return*/];
+                }
+            });
+        }); };
+        this.getCollectionRoute = function (req, res, next) { return __awaiter(_this, void 0, void 0, function () {
+            var userId, result;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        userId = req.userId;
+                        return [4 /*yield*/, User_1.default.findOne({ _id: userId })
+                                .populate("photos")
+                                .exec()];
+                    case 1:
+                        result = _a.sent();
+                        res.json({
+                            msg: "Able to fetch collections",
+                            data: result !== null ? result.photos : null
+                        });
+                        return [2 /*return*/];
                 }
             });
         }); };
