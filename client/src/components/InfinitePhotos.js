@@ -8,13 +8,7 @@ import { fetchUpdate } from "../store/actions/fetchActions";
 import { savePhotos } from "../store/actions/dataActions";
 import CardPhoto from "./CardPhoto";
 
-const InfinitePhotos = ({
-  photoData,
-  keywords,
-  scrollMorePhotos,
-  save,
-  pendingSave
-}) => {
+const InfinitePhotos = ({ photoData, keywords, scrollMorePhotos, save }) => {
   const [photos, setPhotos] = useState([]);
 
   const fetchMoreData = () => {
