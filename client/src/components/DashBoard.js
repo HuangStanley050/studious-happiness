@@ -8,7 +8,7 @@ import { fetchCollectionStart } from "../store/actions/fetchActions";
 const DashBoard = ({ getCollection, collection }) => {
   useEffect(() => {
     getCollection();
-  }, [getCollection]);
+  }, []);
   const photoCollection = (
     <Grid stackable columns={2}>
       <Grid.Column>
