@@ -3,6 +3,7 @@ import * as actionType from "../actions/actionTypes";
 const initialState = {
   keywords: [],
   data: [],
+
   collection: [],
   loading: false,
   error: ""
@@ -16,7 +17,6 @@ const reducer = (state = initialState, action) => {
         loading: true
       };
     case actionType.FETCH_COLLECTION_OKAY:
-      console.log(action.data);
       return {
         ...state,
         loading: false,
