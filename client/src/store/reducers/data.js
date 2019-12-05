@@ -10,6 +10,18 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case actionType.FETCH_COLLECTION_START:
+      return {
+        ...state,
+        loading: true
+      };
+    case actionType.FETCH_COLLECTION_OKAY:
+      console.log(action.data);
+      return {
+        ...state,
+        loading: false,
+        collection: [...state.collection, ...action.data]
+      };
     case actionType.SAVE_PHOTOS_START:
       return {
         ...state,

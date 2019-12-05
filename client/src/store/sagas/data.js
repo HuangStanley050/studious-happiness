@@ -45,7 +45,8 @@ function* CollectionSagaWorker(action) {
       method: "get",
       url: `${API.collection}`
     });
-    console.log(result.data);
+
+    yield put(fetchCollectionOkay(result.data.data));
   } catch (err) {
     console.log(err);
   }
