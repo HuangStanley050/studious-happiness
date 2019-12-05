@@ -33,7 +33,7 @@ const InfinitePhotos = ({
     }
   };
   const submitPhotosHandler = () => {
-    if (pendingSave.length === 0) {
+    if (photos.length === 0) {
       alert("No photos selected");
       return;
     }
@@ -42,7 +42,7 @@ const InfinitePhotos = ({
 
   return (
     <div style={{ marginTop: "3rem" }}>
-      {pendingSave.length !== 0 ? (
+      {photos.length !== 0 ? (
         <Grid>
           <Grid.Column textAlign="center">
             <Button onClick={submitPhotosHandler} animated="vertical">
@@ -87,13 +87,12 @@ InfinitePhotos.propTypes = {
   photoData: PropTypes.arrayOf(PropTypes.object).isRequired,
   keywords: PropTypes.arrayOf(PropTypes.string).isRequired,
   scrollMorePhotos: PropTypes.func.isRequired,
-  pendingSave: PropTypes.arrayOf(PropTypes.object).isRequired,
+
   save: PropTypes.func.isRequired
 };
 const mapStateToProps = state => ({
   photoData: state.data.data,
-  keywords: state.data.keywords,
-  pendingSave: state.data.pendingSave
+  keywords: state.data.keywords
 });
 const mapDispatchToProps = dispatch => {
   return {
