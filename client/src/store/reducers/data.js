@@ -26,7 +26,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        collection: [...state.collection, ...action.data]
+        collection: [...action.data]
       };
     case actionType.SAVE_PHOTOS_START:
       return {

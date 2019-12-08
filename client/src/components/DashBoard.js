@@ -9,20 +9,16 @@ const DashBoard = ({ getCollection, collection }) => {
   useEffect(() => {
     getCollection();
   }, []);
-  const photoCollection = (
-    <Grid stackable columns={2}>
+  const photoCollection = collection.map(photo => {
+    return (
       <Grid.Column>
         <Segment>
-          <Image src="https://react.semantic-ui.com/images/wireframe/paragraph.png" />
+          <Image src={photo.pictureUrl} />
         </Segment>
       </Grid.Column>
-      <Grid.Column>
-        <Segment>
-          <Image src="https://react.semantic-ui.com/images/wireframe/paragraph.png" />
-        </Segment>
-      </Grid.Column>
-    </Grid>
-  );
+    );
+  });
+
   return (
     <div style={{ marginTop: "2rem" }}>
       <Container>
@@ -32,7 +28,7 @@ const DashBoard = ({ getCollection, collection }) => {
             You have no photos saved
           </h2>
         ) : (
-          photoCollection
+          <div className="ui stackable two column grid">{photoCollection}</div>
         )}
       </Container>
     </div>

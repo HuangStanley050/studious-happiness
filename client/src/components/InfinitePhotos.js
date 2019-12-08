@@ -32,6 +32,7 @@ const InfinitePhotos = ({ photoData, keywords, scrollMorePhotos, save }) => {
       return;
     }
     save(photos);
+    setPhotos([]);
   };
 
   return (
