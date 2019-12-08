@@ -11,6 +11,12 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case actionType.LOGOUT:
+      return {
+        ...state,
+        collection: [],
+        data: []
+      };
     case actionType.FETCH_COLLECTION_START:
       return {
         ...state,
