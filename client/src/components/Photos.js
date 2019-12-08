@@ -1,7 +1,7 @@
 import React from "react";
-import PropTypes from "prop-types";
+
 import { Container } from "semantic-ui-react";
-import { connect } from "react-redux";
+
 import SearchBox from "./SearchBox";
 import InfinitePhotos from "./InfinitePhotos";
 import RecentSearches from "./RecentSearches";

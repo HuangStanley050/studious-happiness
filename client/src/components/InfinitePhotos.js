@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { uuid } from "uuidv4";
+import React, { useState } from "react";
+
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -54,7 +54,7 @@ const InfinitePhotos = ({ photoData, keywords, scrollMorePhotos, save }) => {
         hasMore
         className="ui stackable two column grid"
       >
-        {photoData.map(photo => {
+        {photoData.map((photo, index) => {
           let show = false;
           // show if the photos in in the saved array
 
@@ -63,7 +63,7 @@ const InfinitePhotos = ({ photoData, keywords, scrollMorePhotos, save }) => {
           }
 
           return (
-            <Grid.Column key={uuid()}>
+            <Grid.Column key={photo.photoId + index}>
               <CardPhoto
                 showCheck={show}
                 savePhoto={savePhotoHandler}
