@@ -18,6 +18,7 @@ const reducer = (state = initialState, action) => {
         data: []
       };
     case actionType.FETCH_COLLECTION_START:
+    case actionType.FETCH_PHOTOS_SCROLL:
       return {
         ...state,
         loading: true
@@ -47,7 +48,8 @@ const reducer = (state = initialState, action) => {
     case actionType.FETCH_PHOTOS_SCROLL_OKAY:
       return {
         ...state,
-        data: [...state.data, ...action.data]
+        data: [...state.data, ...action.data],
+        loading: false
       };
     case actionType.FETCH_PHOTOS_OKAY:
       return {
