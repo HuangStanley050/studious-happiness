@@ -5,7 +5,7 @@ const initialState = {
   data: [],
 
   collection: [],
-  loading: false,
+  loading: true,
   error: ""
 };
 

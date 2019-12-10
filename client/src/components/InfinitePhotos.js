@@ -7,8 +7,15 @@ import { Grid, Button, Icon } from "semantic-ui-react";
 import { fetchUpdate } from "../store/actions/fetchActions";
 import { savePhotos } from "../store/actions/dataActions";
 import CardPhoto from "./CardPhoto";
+import Spinner from "./Spinner";
 
-const InfinitePhotos = ({ photoData, keywords, scrollMorePhotos, save }) => {
+const InfinitePhotos = ({
+  photoData,
+  keywords,
+  scrollMorePhotos,
+  save,
+  loading
+}) => {
   const [photos, setPhotos] = useState([]);
 
   const fetchMoreData = () => {
@@ -53,6 +60,7 @@ const InfinitePhotos = ({ photoData, keywords, scrollMorePhotos, save }) => {
         dataLength={photoData.length}
         next={fetchMoreData}
         hasMore
+        loader={loading ? <Spinner /> : null}
         className="ui stackable two column grid"
       >
         {photoData.map((photo, index) => {
@@ -82,12 +90,13 @@ InfinitePhotos.propTypes = {
   photoData: PropTypes.arrayOf(PropTypes.object).isRequired,
   keywords: PropTypes.arrayOf(PropTypes.string).isRequired,
   scrollMorePhotos: PropTypes.func.isRequired,
-
+  loading: PropTypes.bool.isRequired,
   save: PropTypes.func.isRequired
 };
 const mapStateToProps = state => ({
   photoData: state.data.data,
-  keywords: state.data.keywords
+  keywords: state.data.keywords,
+  loading: state.data.loading
 });
 const mapDispatchToProps = dispatch => {
   return {
