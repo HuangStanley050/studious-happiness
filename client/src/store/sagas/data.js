@@ -39,6 +39,7 @@ function* DataSagaWorker(action) {
 
 function* CollectionSagaWorker(action) {
   const token = yield localStorage.getItem("dockerPhotos");
+
   try {
     const result = yield axios({
       headers: { Authorization: `bearer ${token}` },

@@ -9,9 +9,9 @@ const DashBoard = ({ getCollection, collection }) => {
   useEffect(() => {
     getCollection();
   }, []);
-  const photoCollection = collection.map(photo => {
+  const photoCollection = collection.map((photo, index) => {
     return (
-      <Grid.Column>
+      <Grid.Column key={index}>
         <Segment>
           <Image src={photo.pictureUrl} />
         </Segment>

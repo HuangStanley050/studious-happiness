@@ -20,7 +20,6 @@ const InfinitePhotos = ({
 
   const fetchMoreData = () => {
     if (keywords.length === 0) {
-      alert("you have no keywords entered");
       return;
     }
     scrollMorePhotos(keywords[keywords.length - 1]);
