@@ -15,7 +15,8 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         collection: [],
-        data: []
+        data: [],
+        keywords: []
       };
     case actionType.FETCH_COLLECTION_START:
     case actionType.FETCH_PHOTOS_SCROLL:
