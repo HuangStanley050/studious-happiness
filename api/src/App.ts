@@ -1,4 +1,5 @@
 import express, { Express, Request, Response, NextFunction } from "express";
+import path from "path";
 import cors from "cors";
 
 export interface Controller {
@@ -20,8 +21,14 @@ export class App {
 
     this.initializeMiddleware();
     this.intializeControllers(controllers);
+    this.serveReact();
     this.errorHandler();
   }
+  private serveReact = () => {
+    this.app.get("*", (req: Request, res: Response) => {
+      res.sendFile(path.join(__dirname + "./client/build/index.html"));
+    });
+  };
   private errorHandler = () => {
     this.app.use(
       (err: Error, req: Request, res: Response, next: NextFunction) => {
