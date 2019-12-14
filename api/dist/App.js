@@ -4,10 +4,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = __importDefault(require("express"));
+var path_1 = __importDefault(require("path"));
 var cors_1 = __importDefault(require("cors"));
 var App = /** @class */ (function () {
     function App(port, controllers) {
         var _this = this;
+        this.serveReact = function () {
+            _this.app.get("*", function (req, res) {
+                res.sendFile(path_1.default.join(__dirname + "./client/build/index.html"));
+            });
+        };
         this.errorHandler = function () {
             _this.app.use(function (err, req, res, next) {
                 var status = err.status || 500;
@@ -32,6 +38,7 @@ var App = /** @class */ (function () {
         this.port = port;
         this.initializeMiddleware();
         this.intializeControllers(controllers);
+        this.serveReact();
         this.errorHandler();
     }
     App.prototype.listen = function () {
