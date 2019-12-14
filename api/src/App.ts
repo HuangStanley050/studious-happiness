@@ -26,7 +26,7 @@ export class App {
   }
   private serveReact = () => {
     this.app.get("*", (req: Request, res: Response) => {
-      res.sendFile(path.join(__dirname + "./client/build/index.html"));
+      res.sendFile(path.join(__dirname + "/client/build/index.html"));
     });
   };
   private errorHandler = () => {
