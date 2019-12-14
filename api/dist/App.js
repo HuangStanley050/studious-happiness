@@ -4,14 +4,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = __importDefault(require("express"));
-var path_1 = __importDefault(require("path"));
 var cors_1 = __importDefault(require("cors"));
 var App = /** @class */ (function () {
     function App(port, controllers) {
         var _this = this;
         this.serveReact = function () {
             _this.app.get("*", function (req, res) {
-                res.sendFile(path_1.default.join(__dirname + "./client/build/index.html"));
+                res.sendFile("/client/build/index.html", { root: __dirname });
             });
         };
         this.errorHandler = function () {
