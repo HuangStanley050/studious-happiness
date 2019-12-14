@@ -45,6 +45,7 @@ export class App {
   private initializeMiddleware = () => {
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
+    this.app.use(express.static(__dirname + "/client/build"));
     this.app.use(cors());
   };
   private intializeControllers = (controllers: Controller[]) => {

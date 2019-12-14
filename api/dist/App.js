@@ -26,6 +26,7 @@ var App = /** @class */ (function () {
         this.initializeMiddleware = function () {
             _this.app.use(express_1.default.json());
             _this.app.use(express_1.default.urlencoded({ extended: true }));
+            _this.app.use(express_1.default.static(__dirname + "/client/build"));
             _this.app.use(cors_1.default());
         };
         this.intializeControllers = function (controllers) {
